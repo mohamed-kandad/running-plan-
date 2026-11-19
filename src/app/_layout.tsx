@@ -1,4 +1,4 @@
-import { Archivo_900Black_Italic } from '@expo-google-fonts/archivo';
+import { Archivo_700Bold_Italic, Archivo_900Black_Italic } from '@expo-google-fonts/archivo';
 import { Inter_500Medium, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import { JetBrainsMono_500Medium, JetBrainsMono_700Bold } from '@expo-google-fonts/jetbrains-mono';
 import {
@@ -20,9 +20,9 @@ SplashScreen.preventAutoHideAsync().catch(() => {});
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
     'SpaceGrotesk-Bold': SpaceGrotesk_700Bold,
-    // Space Grotesk ships no italic file; the bold face is reused so italic
-    // styles keep the right typeface instead of falling back to the system font.
-    'SpaceGrotesk-BoldItalic': SpaceGrotesk_700Bold,
+    // Headings use a real italic face: Space Grotesk ships no italic file, so a
+    // generated slant never renders consistently across platforms.
+    'Archivo-BoldItalic': Archivo_700Bold_Italic,
     'Inter-Medium': Inter_500Medium,
     'Inter-SemiBold': Inter_600SemiBold,
     'ArchivoBlack-Italic': Archivo_900Black_Italic,

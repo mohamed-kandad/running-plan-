@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   headerText: { flex: 1, gap: 4 },
   title: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 21,
     letterSpacing: -0.3,

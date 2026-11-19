@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 28,
     letterSpacing: -0.5,
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
   monthHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   monthTitle: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 20,
     letterSpacing: -0.3,

@@ -89,9 +89,6 @@ export default function TodayScreen() {
                 : 'Ready to run?'}
           </Text>
         </View>
-        <View style={styles.avatarBadge}>
-          <Ionicons name="person" size={18} color={colors.accent} />
-        </View>
       </View>
 
       {plan.length === 0 ? (
@@ -341,21 +338,10 @@ const styles = StyleSheet.create({
   },
   greeting: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 28,
     letterSpacing: -0.5,
-  },
-  avatarBadge: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.surfaceAlt,
-    borderWidth: 1.5,
-    borderColor: colors.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 4,
   },
 
   /* ---------- Shared card design (Weekly Volume + Today's Workout) ---------- */
@@ -377,18 +363,16 @@ const styles = StyleSheet.create({
     color: colors.muted,
     fontWeight: '500' as const,
     fontSize: 11,
-    fontFamily: 'SpaceGrotesk-BoldItalic',
+    fontFamily: 'Archivo-BoldItalic',
     letterSpacing: 1.1,
     textTransform: 'uppercase' as const,
-    fontStyle: 'italic',
 
   },
   cardAccent: {
     color: colors.accent,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 13,
     fontWeight: '700',
-    fontStyle: 'italic',
   },
   bigRow: {
     flexDirection: 'row',
@@ -397,18 +381,16 @@ const styles = StyleSheet.create({
   },
   bigValue: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 36,
     letterSpacing: -1,
-    fontStyle: 'italic',
   },
   bigUnit: {
     color: colors.muted,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 16,
     fontWeight: '700',
-    fontStyle: 'italic',
   },
   badge: {
     backgroundColor: `${colors.accent}1A`,
@@ -419,19 +401,17 @@ const styles = StyleSheet.create({
   },
   badgeText: {
     color: colors.accent,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 13,
     fontWeight: '700',
-    fontStyle: 'italic',
   },
   bigSide: {
     color: colors.faint,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 11,
     fontWeight: '700',
     letterSpacing: 0.3,
     marginLeft: 6,
-    fontStyle: 'italic',
   },
 
   /* ---------- Weekly volume specifics ---------- */
@@ -480,10 +460,9 @@ const styles = StyleSheet.create({
   /* ---------- Today's workout specifics ---------- */
   workoutTitle: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 16,
-    fontStyle: 'italic',
   },
   statsRow: {
     flexDirection: 'row',
@@ -504,10 +483,9 @@ const styles = StyleSheet.create({
   },
   statValue: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 14,
-    fontStyle: 'italic',
   },
   statLabel: {
     color: colors.faint,
@@ -537,10 +515,9 @@ const styles = StyleSheet.create({
   },
   primaryBtnText: {
     color: colors.accentInk,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 14,
-    fontStyle: 'italic',
   },
   secondaryBtn: {
     paddingHorizontal: 20,
@@ -553,13 +530,12 @@ const styles = StyleSheet.create({
   },
   secondaryBtnText: {
     color: colors.muted,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 13,
-    fontStyle: 'italic',
   },
 
-  link: { color: colors.accent, fontFamily: 'SpaceGrotesk-Bold', fontWeight: '700', fontSize: 12, fontStyle: 'italic' },
+  link: { color: colors.accent, fontFamily: 'Archivo-BoldItalic', fontWeight: '700', fontSize: 12 },
   quickLog: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -573,10 +549,9 @@ const styles = StyleSheet.create({
   },
   quickLogText: {
     color: colors.muted,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 13,
-    fontStyle: 'italic',
   },
   /* ---------- Compact This Week cards ---------- */
   weekList: {
@@ -638,7 +613,7 @@ const styles = StyleSheet.create({
   },
   weekDayTitle: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 12,
     fontWeight: '700',
   },
@@ -657,10 +632,9 @@ const styles = StyleSheet.create({
   },
   weekDayDistance: {
     color: colors.accent,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 12,
     fontWeight: '700',
-    fontStyle: 'italic',
   },
   weekDayStatus: {
     width: 21,

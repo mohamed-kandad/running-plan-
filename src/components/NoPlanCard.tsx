@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   copy: { flex: 1, gap: 4 },
   title: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-BoldItalic',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 18,
     letterSpacing: -0.3,
   },

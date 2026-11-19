@@ -240,7 +240,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 28,
     letterSpacing: -0.5,
@@ -258,14 +258,14 @@ const styles = StyleSheet.create({
   },
   heroValue: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 48,
     letterSpacing: -1.5,
   },
   heroUnit: {
     color: colors.muted,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 18,
   },
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
   adherenceRow: { flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' },
   adherenceValue: {
     color: colors.accent,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 36,
     letterSpacing: -0.8,

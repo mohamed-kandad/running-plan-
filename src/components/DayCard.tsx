@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 12,
     fontWeight: '700',
   },
@@ -226,10 +226,9 @@ const styles = StyleSheet.create({
   },
   distance: {
     color: colors.accent,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 12,
     fontWeight: '700',
-    fontStyle: 'italic',
   },
   status: {
     width: 21,

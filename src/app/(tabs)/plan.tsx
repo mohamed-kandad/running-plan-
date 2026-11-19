@@ -24,7 +24,7 @@ import { useApp } from '@/store/AppStore';
 import { colors, font, radius } from '@/theme';
 
 const FONT_BOLD = 'SpaceGrotesk-Bold';
-const FONT_ITALIC = 'SpaceGrotesk-BoldItalic';
+const FONT_ITALIC = 'Archivo-BoldItalic';
 const DAY_LABELS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
 export default function PlanScreen() {
@@ -571,9 +571,8 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontSize: 29,
     letterSpacing: -0.8,
-    fontFamily: 'SpaceGrotesk-BoldItalic',
+    fontFamily: FONT_ITALIC,
     fontWeight: '700' as const,
-    fontStyle: 'italic' as const,
   },
   headerSubtitle: {
     color: colors.muted,
@@ -640,10 +639,9 @@ const styles = StyleSheet.create({
   },
   heroPct: {
     color: colors.accentInk,
-    fontFamily: FONT_BOLD,
+    fontFamily: FONT_ITALIC,
     fontSize: 11,
     letterSpacing: 0.8,
-    fontStyle: 'italic',
   },
   heroBigRow: {
     flexDirection: 'row',
@@ -659,10 +657,9 @@ const styles = StyleSheet.create({
   },
   heroBigUnit: {
     color: colors.accentInk,
-    fontFamily: FONT_BOLD,
+    fontFamily: FONT_ITALIC,
     fontSize: 13,
     lineHeight: 15,
-    fontStyle: 'italic',
     opacity: 0.75,
     paddingBottom: 9,
   },
@@ -685,10 +682,9 @@ const styles = StyleSheet.create({
   },
   heroMeta: {
     color: colors.accentInk,
-    fontFamily: FONT_BOLD,
+    fontFamily: FONT_ITALIC,
     fontSize: 11,
     letterSpacing: 0.3,
-    fontStyle: 'italic',
     opacity: 0.8,
   },
 
@@ -773,10 +769,9 @@ const styles = StyleSheet.create({
   },
   weekDone: {
     color: colors.faint,
-    fontFamily: FONT_BOLD,
+    fontFamily: FONT_ITALIC,
     fontSize: 10,
     letterSpacing: 0.4,
-    fontStyle: 'italic',
   },
   dotsRow: {
     flexDirection: 'row',
@@ -805,9 +800,8 @@ const styles = StyleSheet.create({
   },
   dayDotText: {
     color: colors.faint,
-    fontFamily: FONT_BOLD,
+    fontFamily: FONT_ITALIC,
     fontSize: 12,
-    fontStyle: 'italic',
   },
   dayDotTextPlanned: { color: colors.text },
   dayDotTextDone: { color: colors.accentInk },

@@ -31,7 +31,7 @@ const BG = '#0E0F0C';
 // --------------------
 
 const FONT_BOLD = 'SpaceGrotesk-Bold';
-const FONT_ITALIC = 'SpaceGrotesk-BoldItalic';
+const FONT_ITALIC = 'Archivo-BoldItalic';
 const THUMB = 56;
 const TRACK_PAD = 4;
 const DASHES = Array.from({ length: 48 }, (_, i) => i);
@@ -636,8 +636,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         letterSpacing: -0.5,
     },
-    byLabel: { color: colors.faint, fontFamily: FONT_BOLD, fontSize: 10, letterSpacing: 1.2 },
-    byName: { color: colors.accent, fontFamily: FONT_BOLD, fontStyle: 'italic', fontSize: 12 },
+    byLabel: { color: colors.faint, fontFamily: FONT_ITALIC, fontSize: 10, letterSpacing: 1.2 },
+    byName: { color: colors.accent, fontFamily: FONT_BOLD,  fontSize: 12 },
 
     /* hero */
     hero: { flex: 1, justifyContent: 'center', gap: 12 },

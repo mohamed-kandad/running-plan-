@@ -12,7 +12,7 @@ import { Sheet } from './Sheet';
 import { Button } from './ui';
 
 const FONT_BOLD = 'SpaceGrotesk-Bold';
-const FONT_ITALIC = 'SpaceGrotesk-BoldItalic';
+const FONT_ITALIC = 'Archivo-BoldItalic';
 
 export interface RunInputValues {
   distanceKm: number;

@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 20,
     fontWeight: '700',
     letterSpacing: -0.4,

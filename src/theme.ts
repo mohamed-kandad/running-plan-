@@ -54,11 +54,11 @@ export const layout = {
 
 export const font = {
   // Space Grotesk — display, big numbers, screen titles
-  hero: { fontFamily: 'SpaceGrotesk-Bold', fontWeight: '700' as const, fontSize: 64, letterSpacing: -2 },
-  display: { fontFamily: 'SpaceGrotesk-Bold', fontWeight: '700' as const, fontSize: 52, letterSpacing: -1.5 },
-  h1: { fontFamily: 'SpaceGrotesk-Bold', fontWeight: '700' as const, fontSize: 28, letterSpacing: -0.5 },
-  h2: { fontFamily: 'SpaceGrotesk-Bold', fontWeight: '700' as const, fontSize: 20, letterSpacing: -0.3 },
-  stat: { fontFamily: 'SpaceGrotesk-Bold', fontWeight: '700' as const, fontSize: 36, letterSpacing: -0.8 },
+  hero: { fontFamily: 'Archivo-BoldItalic', fontWeight: '700' as const, fontSize: 64, letterSpacing: -2 },
+  display: { fontFamily: 'Archivo-BoldItalic', fontWeight: '700' as const, fontSize: 52, letterSpacing: -1.5 },
+  h1: { fontFamily: 'Archivo-BoldItalic', fontWeight: '700' as const, fontSize: 28, letterSpacing: -0.5 },
+  h2: { fontFamily: 'Archivo-BoldItalic', fontWeight: '700' as const, fontSize: 20, letterSpacing: -0.3 },
+  stat: { fontFamily: 'Archivo-BoldItalic', fontWeight: '700' as const, fontSize: 36, letterSpacing: -0.8 },
 
   // Archivo Black Italic — hero CTA words and workout names
   heroTitle: {

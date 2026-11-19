@@ -381,10 +381,9 @@ const styles = StyleSheet.create({
   sectionText: {
     color: colors.muted,
     ...font.label,
-    fontFamily: 'SpaceGrotesk-BoldItalic',
+    fontFamily: 'Archivo-BoldItalic',
     letterSpacing: 1.1,
     textTransform: 'uppercase' as const,
-    fontStyle: 'italic',
   },
   pill: {
     paddingHorizontal: 10,

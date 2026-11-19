@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 28,
     letterSpacing: -0.5,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   hint: { color: colors.faint, fontSize: 11.5, lineHeight: 17 },
   input: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontSize: 22,
     letterSpacing: -0.4,
     backgroundColor: colors.surfaceAlt,
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
   statDivider: { width: 1, alignSelf: 'stretch', backgroundColor: colors.border },
   statValue: {
     color: colors.text,
-    fontFamily: 'SpaceGrotesk-Bold',
+    fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 26,
     letterSpacing: -0.5,
