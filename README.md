@@ -98,3 +98,5 @@ npx expo install --fix   # resolve SDK-compatible dependency versions
 
 Native code is generated (CNG) — configure native behaviour in `app.json`, never in `ios/` or
 `android/`. AsyncStorage ships with Expo Go, so no development build is required.
+
+# running-plan-
