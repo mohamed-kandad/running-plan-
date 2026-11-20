@@ -3,6 +3,7 @@ import { router } from 'expo-router';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { EmptyWeekCard } from '@/components/EmptyWeekCard';
 import { LogRunSheet } from '@/components/LogRunSheet';
 import { NoPlanCard } from '@/components/NoPlanCard';
 import { WorkoutEditorSheet } from '@/components/WorkoutEditorSheet';
@@ -33,6 +34,14 @@ export default function TodayScreen() {
   const phase = plan.length > 0 ? phaseLabel(week, totalWeeks) : 'No plan';
 
   const weekStart = startOfWeek(today);
+  const weekEnd = addDays(weekStart, 6);
+  // A week with no sessions is its own state: nothing to track, everything to plan.
+  const weekEmpty = plan.length > 0 && !plan.some((w) => w.date >= weekStart && w.date <= weekEnd);
+  const nextSession =
+    [...plan].filter((w) => w.date > weekEnd).sort((a, b) => a.date.localeCompare(b.date))[0] ??
+    null;
+  const firstSessionDate =
+    [...plan].sort((a, b) => a.date.localeCompare(b.date))[0]?.date ?? null;
   const weekDays = Array.from({ length: 7 }, (_, i) => addDays(weekStart, i)).map((date) => {
     const workout = plan.find((w) => w.date === date) ?? null;
     return { date, workout, completed: workout ? completedIds.has(workout.id) : false };
@@ -124,7 +133,8 @@ export default function TodayScreen() {
         </>
       ) : (
         <>
-      {/* Weekly Volume Card */}
+      {/* Weekly Volume Card — hidden while this week has no sessions */}
+      {weekEmpty ? null : (
       <View style={styles.card}>
         <View style={styles.cardHeader}>
           <Text style={styles.cardLabel}>WEEKLY VOLUME</Text>
@@ -175,6 +185,7 @@ export default function TodayScreen() {
           })}
         </View>
       </View>
+      )}
 
       {/* Today's Workout Card (same design as Weekly Volume) */}
       <View style={styles.card}>
@@ -279,6 +290,18 @@ export default function TodayScreen() {
           </Pressable>
         }
       />
+      {weekEmpty ? (
+        <EmptyWeekCard
+          weekStart={weekStart}
+          today={today}
+          nextSession={nextSession}
+          firstSessionDate={firstSessionDate}
+          onAddWorkout={() => setEditor({ date: today })}
+          onOpenPlan={() => router.navigate('/plan')}
+          onOpenSession={(workout) => setSheetWorkout(workout)}
+        />
+      ) : null}
+      {weekEmpty ? null : (
       <View style={styles.weekList}>
         {weekDays.map(({ date, workout, completed }, index) => {
           const isToday = date === today;
@@ -335,6 +358,7 @@ export default function TodayScreen() {
           );
         })}
       </View>
+      )}
         </>
       )}
 

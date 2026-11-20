@@ -43,7 +43,19 @@
           "color": "#D4FF00"
         }
       ],
-      "expo-splash-screen"
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0D0F12",
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 132,
+          "resizeMode": "contain",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#0D0F12"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
