@@ -66,6 +66,10 @@ interface AppContextValue extends AppState {
   linkCalendarEvents: (ids: Record<string, string>) => void;
   importPlanData: (data: { workouts: Workout[]; runs: RunLog[] }) => void;
   addRuns: (runs: RunLog[]) => void;
+  /** Creates a workout, or replaces the one that already owns this id. */
+  saveWorkout: (workout: Workout) => void;
+  /** Removes a workout from the plan; logged runs keep their history. */
+  deleteWorkout: (id: string) => void;
   adjustZoneEdge: (id: number, edge: 'min' | 'max', delta: number) => void;
   setMaxHr: (maxHr: number) => void;
   setRestingHr: (restingHr: number) => void;
@@ -253,6 +257,36 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState((prev) => ({ ...prev, runs: mergeRuns(prev.runs, incoming) }));
   }, []);
 
+  const saveWorkout = useCallback((workout: Workout) => {
+    setState((prev) => {
+      const existing = prev.plan.find((item) => item.id === workout.id);
+      const plan = existing
+        ? prev.plan.map((item) => (item.id === workout.id ? workout : item))
+        : [...prev.plan, workout];
+      plan.sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
+
+      // A moved session no longer matches its calendar event.
+      const staleEvent = existing && existing.date !== workout.date;
+      const calendarEventIds = staleEvent
+        ? Object.fromEntries(
+            Object.entries(prev.calendarEventIds).filter(([id]) => id !== workout.id)
+          )
+        : prev.calendarEventIds;
+
+      return { ...prev, plan, calendarEventIds };
+    });
+  }, []);
+
+  const deleteWorkout = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      plan: prev.plan.filter((workout) => workout.id !== id),
+      calendarEventIds: Object.fromEntries(
+        Object.entries(prev.calendarEventIds).filter(([key]) => key !== id)
+      ),
+    }));
+  }, []);
+
   const adjustZoneEdge = useCallback((id: number, edge: 'min' | 'max', delta: number) => {
     setState((prev) => ({ ...prev, zones: adjustZone(prev.zones, id, edge, delta) }));
   }, []);
@@ -302,6 +336,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       linkCalendarEvents,
       importPlanData,
       addRuns,
+      saveWorkout,
+      deleteWorkout,
       adjustZoneEdge,
       setMaxHr,
       setRestingHr,
@@ -322,6 +358,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       linkCalendarEvents,
       importPlanData,
       addRuns,
+      saveWorkout,
+      deleteWorkout,
       adjustZoneEdge,
       setMaxHr,
       setRestingHr,

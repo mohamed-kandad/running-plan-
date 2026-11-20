@@ -14,6 +14,8 @@ type DayCardProps = {
   today: boolean;
   weekMaxKm: number;
   onPress?: () => void;
+  /** Tapping a rest day can create a session on that date. */
+  onAdd?: () => void;
 };
 
 const DAY_LABELS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -26,6 +28,7 @@ export function DayCard({
   today,
   weekMaxKm,
   onPress,
+  onAdd,
 }: DayCardProps) {
   // These props remain part of the existing PlanScreen API.
   // The compact weekly-card design does not use distance scaling.
@@ -61,8 +64,10 @@ export function DayCard({
   const dayLabel = DAY_LABELS[parsedDate.getDay()];
   const dayNumber = date.slice(8, 10);
 
+  const action = workout ? onPress : onAdd;
+
   const handlePressIn = () => {
-    if (!workout || !onPress) return;
+    if (!action) return;
     Animated.spring(scale, {
       toValue: 0.99,
       friction: 7,
@@ -81,9 +86,9 @@ export function DayCard({
   };
 
   const handlePress = () => {
-    if (!workout || !onPress) return;
+    if (!action) return;
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => { });
-    onPress();
+    action();
   };
 
   return (
@@ -97,18 +102,18 @@ export function DayCard({
         onPress={handlePress}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        disabled={!workout || !onPress}
-        accessibilityRole={workout && onPress ? 'button' : undefined}
+        disabled={!action}
+        accessibilityRole={action ? 'button' : undefined}
         accessibilityLabel={
           workout
             ? `${dayLabel} ${dayNumber}, ${workout.title}, ${workout.distanceKm} kilometres${completed ? ', completed' : ''}`
-            : `${dayLabel} ${dayNumber}, rest day`
+            : `${dayLabel} ${dayNumber}, rest day${onAdd ? ', add a workout' : ''}`
         }
         style={({ pressed }) => [
           styles.card,
           today && styles.cardToday,
           completed && workout && styles.cardCompleted,
-          pressed && workout && styles.cardPressed,
+          pressed && action && styles.cardPressed,
         ]}
       >
         <View style={styles.date}>
@@ -125,7 +130,7 @@ export function DayCard({
             {workout ? workout.title : 'Rest day'}
           </Text>
           <Text style={styles.type} numberOfLines={1}>
-            {workout ? workout.type.toUpperCase() : 'RECOVERY'}
+            {workout ? workout.type.toUpperCase() : onAdd ? 'ADD WORKOUT' : 'RECOVERY'}
           </Text>
         </View>
 
@@ -141,6 +146,8 @@ export function DayCard({
                 />
               </View>
             </>
+          ) : onAdd ? (
+            <Ionicons name="add" size={17} color={colors.faint} />
           ) : (
             <Ionicons name="moon-outline" size={17} color={colors.faint} />
           )}

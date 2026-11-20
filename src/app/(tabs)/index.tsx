@@ -5,10 +5,12 @@ import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { LogRunSheet } from '@/components/LogRunSheet';
 import { NoPlanCard } from '@/components/NoPlanCard';
+import { WorkoutEditorSheet } from '@/components/WorkoutEditorSheet';
 import { Screen, SectionTitle } from '@/components/ui';
-import { addDays, diffDays, formatLongShort, startOfWeek, todayISO } from '@/lib/date';
+import { addDays, formatLongShort, startOfWeek, todayISO } from '@/lib/date';
 import { paceTarget, phaseLabel, planWeeks } from '@/lib/plan';
 import { currentWeek, kmThisWeek } from '@/lib/stats';
+import { useUserName } from '@/lib/userName';
 import type { Workout } from '@/lib/types';
 import { useApp } from '@/store/AppStore';
 import { colors, font, radius } from '@/theme';
@@ -16,13 +18,15 @@ import { colors, font, radius } from '@/theme';
 export default function TodayScreen() {
   const { plan, runs, completedIds, settings, zones, completeWorkout, logRun } = useApp();
   const today = todayISO();
+  const storedName = useUserName();
+  const firstName = storedName.trim().split(/\s+/)[0] ?? '';
   const [sheetWorkout, setSheetWorkout] = useState<Workout | null>(null);
   const [quickLog, setQuickLog] = useState(false);
+  const [editor, setEditor] = useState<{ workout?: Workout; date?: string } | null>(null);
 
   const todayWorkout = plan.find((w) => w.date === today) ?? null;
   const doneToday = todayWorkout ? completedIds.has(todayWorkout.id) : false;
   const week = currentWeek(plan, today);
-  const daysToRace = Math.max(0, diffDays(today, settings.raceDate));
   const weekDone = plan.filter((w) => w.week === week && completedIds.has(w.id)).length;
   const weekTotal = plan.filter((w) => w.week === week).length;
   const totalWeeks = planWeeks(settings);
@@ -67,10 +71,9 @@ export default function TodayScreen() {
     : '';
 
   const handleSubmit = (input: Parameters<typeof completeWorkout>[1]) => {
+    // Stay open after saving: the sheet shows the saved run with an undo action.
     if (sheetWorkout) completeWorkout(sheetWorkout, input);
     else logRun({ ...input, date: today });
-    setSheetWorkout(null);
-    setQuickLog(false);
   };
 
   const openLog = () => (todayWorkout ? setSheetWorkout(todayWorkout) : setQuickLog(true));
@@ -81,14 +84,22 @@ export default function TodayScreen() {
       <View style={styles.header}>
         <View style={styles.headerText}>
           <Text style={styles.overline}>{formatLongShort(today).toUpperCase()}</Text>
-          <Text style={styles.greeting}>
-            {plan.length === 0
-              ? 'Ready when you are?'
-              : daysToRace > 0
-                ? `Ready to race in ${daysToRace}d?`
-                : 'Ready to run?'}
+          <Text style={styles.greeting} numberOfLines={1}>
+            Hello, {firstName || 'runner'}
           </Text>
         </View>
+        <Pressable
+          onPress={() => router.navigate('/profile')}
+          style={({ pressed }) => [styles.avatar, pressed && { opacity: 0.8 }]}
+          accessibilityRole="button"
+          accessibilityLabel="Open your profile"
+        >
+          {firstName ? (
+            <Text style={styles.avatarInitial}>{firstName.charAt(0).toUpperCase()}</Text>
+          ) : (
+            <Ionicons name="person" size={19} color={colors.accent} />
+          )}
+        </Pressable>
       </View>
 
       {plan.length === 0 ? (
@@ -100,6 +111,15 @@ export default function TodayScreen() {
           >
             <Ionicons name="add" size={16} color={colors.accent} />
             <Text style={styles.quickLogText}>Log a run instead</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => setEditor({ date: today })}
+            style={({ pressed }) => [styles.quickLog, pressed && { opacity: 0.85 }]}
+          >
+            <Ionicons name="create-outline" size={16} color={colors.text} />
+            <Text style={[styles.quickLogText, styles.quickLogTextStrong]}>
+              Create a workout
+            </Text>
           </Pressable>
         </>
       ) : (
@@ -229,6 +249,20 @@ export default function TodayScreen() {
             </Text>
           </Pressable>
           <Pressable
+            onPress={() => setEditor(todayWorkout ? { workout: todayWorkout } : { date: today })}
+            style={({ pressed }) => [styles.iconBtn, pressed && { opacity: 0.8 }]}
+            accessibilityRole="button"
+            accessibilityLabel={
+              todayWorkout ? "Edit today's workout" : 'Add a workout for today'
+            }
+          >
+            <Ionicons
+              name={todayWorkout ? 'create-outline' : 'add'}
+              size={18}
+              color={colors.muted}
+            />
+          </Pressable>
+          <Pressable
             onPress={() => router.navigate('/plan')}
             style={({ pressed }) => [styles.secondaryBtn, pressed && { opacity: 0.8 }]}
           >
@@ -312,7 +346,22 @@ export default function TodayScreen() {
           setQuickLog(false);
         }}
         onSubmit={handleSubmit}
+        onEdit={() => {
+          const target = sheetWorkout;
+          setSheetWorkout(null);
+          setQuickLog(false);
+          setEditor(target ? { workout: target, date: target.date } : { date: today });
+        }}
       />
+
+      {editor ? (
+        <WorkoutEditorSheet
+          key={editor.workout?.id ?? `new-${editor.date ?? today}`}
+          workout={editor.workout ?? null}
+          date={editor.date ?? today}
+          onClose={() => setEditor(null)}
+        />
+      ) : null}
     </Screen>
   );
 }
@@ -329,8 +378,30 @@ const quickWorkout: Workout = {
 };
 
 const styles = StyleSheet.create({
-  header: { flexDirection: 'row', alignItems: 'flex-start', paddingTop: 8 },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingTop: 8,
+  },
   headerText: { flex: 1, gap: 4 },
+  avatar: {
+    width: 46,
+    height: 46,
+    borderRadius: 23,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  avatarInitial: {
+    color: colors.accent,
+    fontFamily: 'Archivo-BoldItalic',
+    fontWeight: '700',
+    fontSize: 20,
+    letterSpacing: -0.5,
+  },
   overline: {
     color: colors.accent,
     ...font.label,
@@ -519,6 +590,15 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 14,
   },
+  iconBtn: {
+    width: 46,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: radius.pill,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surfaceAlt,
+  },
   secondaryBtn: {
     paddingHorizontal: 20,
     alignItems: 'center',
@@ -552,6 +632,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Archivo-BoldItalic',
     fontWeight: '700',
     fontSize: 13,
+  },
+  quickLogTextStrong: {
+    color: colors.text,
   },
   /* ---------- Compact This Week cards ---------- */
   weekList: {

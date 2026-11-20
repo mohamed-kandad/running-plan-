@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { Button, Card, Pill, Screen, SectionTitle } from '@/components/ui';
 import { saveUserName, useUserName } from '@/lib/userName';
@@ -50,8 +51,19 @@ export default function ProfileScreen() {
   return (
     <Screen>
       <View style={styles.header}>
-        <Text style={styles.overline}>ACCOUNT</Text>
-        <Text style={styles.title}>Profile</Text>
+        <View style={styles.headerText}>
+          <Text style={styles.overline}>ACCOUNT</Text>
+          <Text style={styles.title}>Profile</Text>
+        </View>
+        <Pressable
+          onPress={() => (router.canGoBack() ? router.back() : router.replace('/'))}
+          style={({ pressed }) => [styles.close, pressed && { opacity: 0.75 }]}
+          hitSlop={8}
+          accessibilityRole="button"
+          accessibilityLabel="Close profile"
+        >
+          <Ionicons name="close" size={18} color={colors.text} />
+        </Pressable>
       </View>
 
       <Card style={styles.card}>
@@ -119,7 +131,23 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  header: { paddingTop: 8, gap: 4 },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingTop: 8,
+  },
+  headerText: { flex: 1, gap: 4 },
+  close: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    backgroundColor: colors.surface,
+    borderWidth: 1,
+    borderColor: colors.border,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   overline: {
     color: colors.muted,
     ...font.label,

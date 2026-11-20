@@ -60,6 +60,8 @@ export default function RootLayout() {
           {/* Afterwards the tabs own the app and welcome can never come back. */}
           <Stack.Protected guard={onboardingSeen} redirectTo="/welcome">
             <Stack.Screen name="(tabs)" />
+            {/* Reached from the avatar on Home, so it is not a tab. */}
+            <Stack.Screen name="profile" options={{ presentation: 'modal' }} />
           </Stack.Protected>
         </Stack>
       </AppProvider>

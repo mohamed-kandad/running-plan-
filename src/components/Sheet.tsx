@@ -19,6 +19,7 @@ export function Sheet({
   title,
   subtitle,
   footer,
+  action,
   children,
 }: {
   visible: boolean;
@@ -26,6 +27,8 @@ export function Sheet({
   title: string;
   subtitle?: string;
   footer?: React.ReactNode;
+  /** Optional control shown in the header, left of the close button. */
+  action?: React.ReactNode;
   children: React.ReactNode;
 }) {
   return (
@@ -50,11 +53,13 @@ export function Sheet({
                 <Text style={styles.title}>{title}</Text>
                 {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
               </View>
+              {action}
               <Pressable onPress={onClose} hitSlop={10} style={styles.close}>
                 <Ionicons name="close" size={18} color={colors.muted} />
               </Pressable>
             </View>
             <ScrollView
+              style={styles.scroll}
               keyboardShouldPersistTaps="handled"
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.body}
@@ -79,7 +84,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     backgroundColor: 'rgba(0,0,0,0.65)',
   },
-  keyboard: { justifyContent: 'flex-end' },
+  // Fills the screen so the sheet's maxHeight resolves against the viewport.
+  keyboard: { flex: 1, justifyContent: 'flex-end' },
   sheet: {
     backgroundColor: colors.surface,
     borderTopLeftRadius: radius.lg,
@@ -118,6 +124,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  /* Keeps the header and footer on screen while the middle scrolls. */
+  scroll: { flexGrow: 0, flexShrink: 1 },
   body: { gap: 14, paddingBottom: 12 },
   footer: {
     paddingTop: 12,

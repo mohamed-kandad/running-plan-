@@ -16,6 +16,8 @@ export interface Workout {
   type: WorkoutType;
   title: string;
   detail: string;
+  /** Optional custom target pace, e.g. "5:30–5:45"; the type's band is used when absent. */
+  pace?: string;
   distanceKm: number;
   zone: number; // 1-5
 }

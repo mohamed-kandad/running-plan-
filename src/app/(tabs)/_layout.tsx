@@ -1,79 +1,222 @@
 import { Ionicons } from '@expo/vector-icons';
-import { Tabs } from 'expo-router/js-tabs';
-import React from 'react';
-import { Platform, StyleSheet, type ColorValue } from 'react-native';
+import { Tabs, type BottomTabBarProps } from 'expo-router/js-tabs';
+import React, { useEffect, useState } from 'react';
+import { Animated, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { useWorkoutReminders } from '@/lib/reminders';
-import { colors } from '@/theme';
+import { colors, font } from '@/theme';
 
-type TabIconProps = { color: ColorValue | null; focused: boolean; size: number };
+type IconName = keyof typeof Ionicons.glyphMap;
 
-const iconFor = (
-  name: keyof typeof Ionicons.glyphMap,
-  focusedName: keyof typeof Ionicons.glyphMap
-) =>
-  function TabIcon({ color, focused, size }: TabIconProps) {
-    return (
-      <Ionicons
-        name={focused ? focusedName : name}
-        size={size ?? 22}
-        color={(color ?? colors.text) as string}
-      />
-    );
-  };
+const ICONS: Record<string, { off: IconName; on: IconName }> = {
+  index: { off: 'home-outline', on: 'home' },
+  plan: { off: 'list-outline', on: 'list' },
+  calendar: { off: 'calendar-outline', on: 'calendar' },
+  progress: { off: 'stats-chart-outline', on: 'stats-chart' },
+  zones: { off: 'pulse-outline', on: 'pulse' },
+};
+
+const ROW_HEIGHT = 62;
+const MARKER_W = 18;
+
+/* ---------- One tab ---------- */
+function TabItem({
+  routeName,
+  label,
+  focused,
+  onPress,
+  onLongPress,
+}: {
+  routeName: string;
+  label: string;
+  focused: boolean;
+  onPress: () => void;
+  onLongPress: () => void;
+}) {
+  const [anim] = useState(() => new Animated.Value(focused ? 1 : 0));
+
+  useEffect(() => {
+    Animated.spring(anim, {
+      toValue: focused ? 1 : 0,
+      useNativeDriver: true,
+      damping: 16,
+      stiffness: 200,
+      mass: 0.7,
+    }).start();
+  }, [focused, anim]);
+
+  const scale = anim.interpolate({ inputRange: [0, 1], outputRange: [1, 1.12] });
+  const icons = ICONS[routeName] ?? ICONS.index;
+  const isCalendar = routeName === 'calendar';
+  const tint = focused ? colors.accent : colors.muted;
+
+  return (
+    <Pressable
+      accessibilityRole="button"
+      accessibilityLabel={label}
+      accessibilityState={focused ? { selected: true } : {}}
+      onPress={onPress}
+      onLongPress={onLongPress}
+      style={styles.item}
+    >
+      <Animated.View style={[styles.itemInner, { transform: [{ scale }] }]}>
+        {isCalendar ? (
+          <View style={[styles.calendarDisc, !focused && styles.calendarDiscIdle]}>
+            <Ionicons name={icons.on} size={21} color={colors.accentInk} />
+          </View>
+        ) : (
+          <>
+            <Ionicons name={focused ? icons.on : icons.off} size={22} color={tint} />
+            <Text
+              numberOfLines={1}
+              style={[styles.label, { color: tint }, focused && styles.labelActive]}
+            >
+              {label.toUpperCase()}
+            </Text>
+          </>
+        )}
+      </Animated.View>
+    </Pressable>
+  );
+}
+
+/* ---------- Bar with the sliding lime "pace line" ---------- */
+function StrideTabBar({
+  state,
+  descriptors,
+  emitter,
+  navigateToTab,
+  insets,
+}: BottomTabBarProps) {
+  const [rowWidth, setRowWidth] = useState(0);
+  const [position] = useState(() => new Animated.Value(state.index));
+
+  useEffect(() => {
+    Animated.spring(position, {
+      toValue: state.index,
+      useNativeDriver: true,
+      damping: 18,
+      stiffness: 170,
+      mass: 0.8,
+    }).start();
+  }, [state.index, position]);
+
+  const count = state.routes.length;
+  const itemW = rowWidth / count;
+  const translateX = position.interpolate({
+    inputRange: state.routes.map((_, i) => i),
+    outputRange: state.routes.map((_, i) => i * itemW + (itemW - MARKER_W) / 2),
+  });
+
+  return (
+    <View style={[styles.bar, { paddingBottom: insets.bottom }]}>
+      <View
+        style={styles.row}
+        onLayout={(e) => setRowWidth(e.nativeEvent.layout.width)}
+      >
+        {state.routes.map((route, index) => {
+          const { options } = descriptors[route.key];
+          const focused = state.index === index;
+          const label = (options.tabBarAccessibilityLabel ??
+            options.title ??
+            route.name) as string;
+
+          const onPress = () => {
+            const event = emitter.emit({
+              type: 'tabPress',
+              target: route.key,
+              canPreventDefault: true,
+            });
+            if (!focused && !event.defaultPrevented) {
+              navigateToTab(route.key);
+            }
+          };
+
+          const onLongPress = () =>
+            emitter.emit({ type: 'tabLongPress', target: route.key });
+
+          return (
+            <TabItem
+              key={route.key}
+              routeName={route.name}
+              label={label}
+              focused={focused}
+              onPress={onPress}
+              onLongPress={onLongPress}
+            />
+          );
+        })}
+
+        {rowWidth > 0 && (
+          <Animated.View
+            pointerEvents="none"
+            style={[styles.marker, { transform: [{ translateX }] }]}
+          />
+        )}
+      </View>
+    </View>
+  );
+}
 
 export default function TabsLayout() {
   useWorkoutReminders();
 
   return (
     <Tabs
+      tabBar={(props) => <StrideTabBar {...props} />}
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.accent,
-        tabBarInactiveTintColor: colors.faint,
-        tabBarStyle: styles.tabBar,
-        tabBarLabelStyle: styles.label,
-        tabBarItemStyle: styles.item,
         sceneStyle: { backgroundColor: colors.bg },
       }}
     >
-      <Tabs.Screen
-        name="index"
-        options={{ title: 'Home', tabBarIcon: iconFor('home-outline', 'home') }}
-      />
-      <Tabs.Screen
-        name="plan"
-        options={{ title: 'Plan', tabBarIcon: iconFor('list-outline', 'list') }}
-      />
+      <Tabs.Screen name="index" options={{ title: 'Home' }} />
+      <Tabs.Screen name="plan" options={{ title: 'Plan' }} />
       <Tabs.Screen
         name="calendar"
-        options={{ title: 'Calendar', tabBarIcon: iconFor('calendar-outline', 'calendar') }}
+        options={{ title: 'Calendar', tabBarAccessibilityLabel: 'Calendar' }}
       />
-      <Tabs.Screen
-        name="progress"
-        options={{ title: 'Stats', tabBarIcon: iconFor('stats-chart-outline', 'stats-chart') }}
-      />
-      <Tabs.Screen
-        name="zones"
-        options={{ title: 'Zones', tabBarIcon: iconFor('pulse-outline', 'pulse') }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{ title: 'Profile', tabBarIcon: iconFor('person-outline', 'person') }}
-      />
+      <Tabs.Screen name="progress" options={{ title: 'Stats' }} />
+      <Tabs.Screen name="zones" options={{ title: 'Zones' }} />
     </Tabs>
   );
 }
 
 const styles = StyleSheet.create({
-  tabBar: {
-    backgroundColor: colors.surface,
-    borderTopColor: colors.border,
-    borderTopWidth: 1,
-    height: Platform.OS === 'ios' ? 88 : 76,
-    paddingTop: 8,
-    paddingBottom: Platform.OS === 'ios' ? 26 : 12,
+  bar: {
+    backgroundColor: colors.bg,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.borderStrong,
   },
-  label: { fontSize: 10, fontWeight: '600', letterSpacing: 0.3 },
-  item: { paddingVertical: 2 },
+  row: {
+    height: ROW_HEIGHT,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  item: { flex: 1, height: '100%', alignItems: 'center', justifyContent: 'center' },
+  itemInner: { alignItems: 'center', justifyContent: 'center', gap: 4 },
+  label: {
+    ...font.mono,
+    fontSize: 9,
+    letterSpacing: 1.2,
+    opacity: 0.75,
+  },
+  labelActive: { opacity: 1 },
+  marker: {
+    position: 'absolute',
+    bottom: 5,
+    left: 0,
+    width: MARKER_W,
+    height: 3,
+    borderRadius: 2,
+    backgroundColor: colors.accent,
+  },
+  calendarDisc: {
+    width: 42,
+    height: 42,
+    borderRadius: 21,
+    backgroundColor: colors.accent,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  calendarDiscIdle: { opacity: 0.92 },
 });

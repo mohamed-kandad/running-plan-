@@ -5,6 +5,7 @@ import { ActivityIndicator, Pressable, ScrollView, StyleSheet, Text, View } from
 import { DayCard } from '@/components/DayCard';
 import { LogRunSheet } from '@/components/LogRunSheet';
 import { NoPlanCard } from '@/components/NoPlanCard';
+import { WorkoutEditorSheet } from '@/components/WorkoutEditorSheet';
 import { Sheet } from '@/components/Sheet';
 import { Button, Card, Divider, Screen, SectionTitle, Segmented, Stepper } from '@/components/ui';
 import {
@@ -44,6 +45,7 @@ export default function PlanScreen() {
   const thisWeek = currentWeek(plan, today);
   const [selectedWeek, setSelectedWeek] = useState(() => thisWeek);
   const [sheetWorkout, setSheetWorkout] = useState<Workout | null>(null);
+  const [editor, setEditor] = useState<{ workout?: Workout; date?: string } | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [syncBusy, setSyncBusy] = useState<null | 'excel' | 'import-excel' | 'add' | 'import'>(null);
   const [syncStatus, setSyncStatus] = useState<string | null>(null);
@@ -61,6 +63,8 @@ export default function PlanScreen() {
     return { date, workout, completed: workout ? completedIds.has(workout.id) : false };
   });
   const weekMaxKm = Math.max(1, ...weekDays.map((day) => day.workout?.distanceKm ?? 0));
+  const weekEnd = addDays(weekStart, 6);
+  const seedDate = today >= weekStart && today <= weekEnd ? today : weekStart;
 
   const selectedKm = weekKm(plan, selectedWeek);
   const selectedDone = weekWorkouts.filter((w) => completedIds.has(w.id)).length;
@@ -199,7 +203,17 @@ export default function PlanScreen() {
         </Pressable>
       </View>
 
-      {plan.length === 0 ? <NoPlanCard /> : null}
+      {plan.length === 0 ? (
+        <>
+          <NoPlanCard />
+          <Button
+            label="Create a workout"
+            variant="secondary"
+            icon="add"
+            onPress={() => setEditor({ date: today })}
+          />
+        </>
+      ) : null}
 
       {plan.length > 0 ? (
         <>
@@ -346,9 +360,17 @@ export default function PlanScreen() {
             today={date === today}
             weekMaxKm={weekMaxKm}
             onPress={workout ? () => setSheetWorkout(workout) : undefined}
+            onAdd={() => setEditor({ date })}
           />
         ))}
       </View>
+
+      <Button
+        label="Add workout"
+        variant="secondary"
+        icon="add"
+        onPress={() => setEditor({ date: seedDate })}
+      />
         </>
       ) : null}
 
@@ -423,10 +445,28 @@ export default function PlanScreen() {
         workout={sheetWorkout}
         onClose={() => setSheetWorkout(null)}
         onSubmit={(input) => {
+          // The sheet keeps itself open so the saved run can be undone there.
           if (sheetWorkout) completeWorkout(sheetWorkout, input);
-          setSheetWorkout(null);
         }}
+        onEdit={
+          sheetWorkout
+            ? () => {
+                const target = sheetWorkout;
+                setSheetWorkout(null);
+                setEditor({ workout: target, date: target.date });
+              }
+            : undefined
+        }
       />
+
+      {editor ? (
+        <WorkoutEditorSheet
+          key={editor.workout?.id ?? `new-${editor.date ?? seedDate}`}
+          workout={editor.workout ?? null}
+          date={editor.date ?? seedDate}
+          onClose={() => setEditor(null)}
+        />
+      ) : null}
 
       <Sheet
         visible={settingsOpen}

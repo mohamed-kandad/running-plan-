@@ -362,6 +362,7 @@ const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
   content: {
     paddingHorizontal: 20,
+    // Clears the floating glass tab bar.
     paddingBottom: 40,
     gap: 16,
   },

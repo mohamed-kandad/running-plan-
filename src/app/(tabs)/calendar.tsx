@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { DayCard } from '@/components/DayCard';
 import { LogRunSheet } from '@/components/LogRunSheet';
+import { WorkoutEditorSheet } from '@/components/WorkoutEditorSheet';
 import { Button, Card, Screen, SectionTitle, Stat } from '@/components/ui';
 import {
   addDays,
@@ -45,6 +46,7 @@ export default function CalendarScreen() {
   const [month, setMonth] = useState(() => startOfMonth(today));
   const [selected, setSelected] = useState(today);
   const [sheetWorkout, setSheetWorkout] = useState<Workout | null>(null);
+  const [editor, setEditor] = useState<{ workout?: Workout; date?: string } | null>(null);
 
   const days = useMemo(() => monthGrid(month), [month]);
   const plannedByDate = useMemo(() => {
@@ -130,9 +132,19 @@ export default function CalendarScreen() {
             return (
               <Pressable
                 key={date}
-                onPress={() => setSelected(date)}
+                onPress={() => {
+                  setSelected(date);
+                  // A planned day opens its workout straight away.
+                  const workout = plannedByDate.get(date);
+                  if (workout) setSheetWorkout(workout);
+                }}
                 style={styles.cell}
                 hitSlop={2}
+                accessibilityLabel={
+                  plannedByDate.get(date)
+                    ? `${formatShort(date)}, ${plannedByDate.get(date)?.title}`
+                    : formatShort(date)
+                }
               >
                 <View
                   style={[
@@ -231,13 +243,21 @@ export default function CalendarScreen() {
           onPress={() => setSheetWorkout(selectedWorkout)}
         />
       ) : (
-        <Card>
-          <Text style={styles.empty}>
-            {selected === today
-              ? 'No session scheduled today. Log a run from the Today tab if you get one in.'
-              : 'Nothing logged on this day.'}
-          </Text>
-        </Card>
+        <>
+          <Card>
+            <Text style={styles.empty}>
+              {selected === today
+                ? 'No session scheduled today. Add one below, or log a run from the Today tab.'
+                : 'Nothing planned or logged on this day.'}
+            </Text>
+          </Card>
+          <Button
+            label="Add workout for this day"
+            variant="secondary"
+            icon="add"
+            onPress={() => setEditor({ date: selected })}
+          />
+        </>
       )}
 
       {selectedWorkout && selectedRuns.length > 0 ? (
@@ -254,10 +274,28 @@ export default function CalendarScreen() {
         workout={sheetWorkout}
         onClose={() => setSheetWorkout(null)}
         onSubmit={(input) => {
+          // The sheet keeps itself open so the saved run can be undone there.
           if (sheetWorkout) completeWorkout(sheetWorkout, input);
-          setSheetWorkout(null);
         }}
+        onEdit={
+          sheetWorkout
+            ? () => {
+                const target = sheetWorkout;
+                setSheetWorkout(null);
+                setEditor({ workout: target, date: target.date });
+              }
+            : undefined
+        }
       />
+
+      {editor ? (
+        <WorkoutEditorSheet
+          key={editor.workout?.id ?? `new-${editor.date ?? selected}`}
+          workout={editor.workout ?? null}
+          date={editor.date ?? selected}
+          onClose={() => setEditor(null)}
+        />
+      ) : null}
     </Screen>
   );
 }
