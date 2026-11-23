@@ -122,7 +122,7 @@ export async function syncWorkoutReminders(
           title: evening ? `Still time for ${workout.title}` : `Today: ${workout.title}`,
           body: evening
             ? `Your ${workout.distanceKm} km session isn't logged yet. Log it before the day ends.`
-            : `${workout.distanceKm} km planned today. Log it in Stride when you're back.`,
+            : `${workout.distanceKm} km planned today. Log it in Run Plan when you're back.`,
           data: { kind: REMINDER_KIND, workoutId: workout.id, date: workout.date },
           color: ACCENT,
         },

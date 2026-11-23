@@ -3,7 +3,7 @@ import { Animated, Easing, Image, StyleSheet, Text, View } from 'react-native';
 
 import { colors, font } from '@/theme';
 
-const WORD = 'STRIDE';
+const WORD = 'RUN PLAN';
 const MIN_VISIBLE_MS = 1500;
 /** One print per step: alternating feet, lit in sequence like a run cadence. */
 const PRINTS = 7;
@@ -418,9 +418,9 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontFamily: 'ArchivoBlack-Italic',
     fontWeight: '900',
-    fontSize: 56,
+    fontSize: 46,
     letterSpacing: -2,
-    lineHeight: 64,
+    lineHeight: 54,
   },
   wordDot: {
     width: 10,

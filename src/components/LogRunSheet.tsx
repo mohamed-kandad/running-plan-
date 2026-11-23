@@ -1,9 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
+import { router, type Href } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { formatDuration, formatPace, formatShort } from '@/lib/date';
+import { matchExerciseInText } from '@/lib/exercises';
 import { paceTarget } from '@/lib/plan';
 import type { Workout } from '@/lib/types';
 import { buildWorkoutChecklist, type ChecklistTone } from '@/lib/workoutChecklist';
@@ -263,6 +265,7 @@ export function LogRunSheet({
                       step.section && step.section !== steps[index - 1]?.section
                         ? step.section
                         : null;
+                    const linked = matchExerciseInText(step.text);
                     return (
                       <React.Fragment key={step.id}>
                         {heading ? (
@@ -301,12 +304,28 @@ export function LogRunSheet({
                             <Text style={[styles.stepText, on && styles.stepTextDone]}>
                               {step.text}
                             </Text>
+                            {linked?.prescription ? (
+                              <Text style={styles.stepRx}>Workout prescription · {linked.prescription}</Text>
+                            ) : null}
                           </View>
-                          <Ionicons
-                            name={TONE_ICON[step.tone]}
-                            size={15}
-                            color={on ? colors.faint : `${colors.muted}99`}
-                          />
+                          {linked ? (
+                            <Pressable
+                              onPress={() =>
+                                router.push(`/exercise/${linked.exercise.id}` as Href)
+                              }
+                              hitSlop={8}
+                              style={({ pressed }) => [styles.stepLink, pressed && { opacity: 0.6 }]}
+                              accessibilityRole="button"
+                              accessibilityLabel={`How to do ${linked.exercise.name}`}>
+                              <Ionicons name="information-circle-outline" size={19} color={colors.accent} />
+                            </Pressable>
+                          ) : (
+                            <Ionicons
+                              name={TONE_ICON[step.tone]}
+                              size={15}
+                              color={on ? colors.faint : `${colors.muted}99`}
+                            />
+                          )}
                         </Pressable>
                       </React.Fragment>
                     );
@@ -757,6 +776,8 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   stepCopy: { flex: 1, gap: 3 },
+  stepRx: { color: colors.accent, fontSize: 9.5, fontWeight: '600' },
+  stepLink: { padding: 2 },
   stepLabel: {
     fontFamily: FONT_BOLD,
     fontSize: 9,

@@ -12,6 +12,7 @@ const ICONS: Record<string, { off: IconName; on: IconName }> = {
   index: { off: 'home-outline', on: 'home' },
   plan: { off: 'list-outline', on: 'list' },
   calendar: { off: 'calendar-outline', on: 'calendar' },
+  exercises: { off: 'barbell-outline', on: 'barbell' },
   progress: { off: 'stats-chart-outline', on: 'stats-chart' },
   zones: { off: 'pulse-outline', on: 'pulse' },
 };
@@ -47,7 +48,6 @@ function TabItem({
 
   const scale = anim.interpolate({ inputRange: [0, 1], outputRange: [1, 1.12] });
   const icons = ICONS[routeName] ?? ICONS.index;
-  const isCalendar = routeName === 'calendar';
   const tint = focused ? colors.accent : colors.muted;
 
   return (
@@ -60,28 +60,20 @@ function TabItem({
       style={styles.item}
     >
       <Animated.View style={[styles.itemInner, { transform: [{ scale }] }]}>
-        {isCalendar ? (
-          <View style={[styles.calendarDisc, !focused && styles.calendarDiscIdle]}>
-            <Ionicons name={icons.on} size={21} color={colors.accentInk} />
-          </View>
-        ) : (
-          <>
-            <Ionicons name={focused ? icons.on : icons.off} size={22} color={tint} />
-            <Text
-              numberOfLines={1}
-              style={[styles.label, { color: tint }, focused && styles.labelActive]}
-            >
-              {label.toUpperCase()}
-            </Text>
-          </>
-        )}
+        <Ionicons name={focused ? icons.on : icons.off} size={22} color={tint} />
+        <Text
+          numberOfLines={1}
+          style={[styles.label, { color: tint }, focused && styles.labelActive]}
+        >
+          {label.toUpperCase()}
+        </Text>
       </Animated.View>
     </Pressable>
   );
 }
 
 /* ---------- Bar with the sliding lime "pace line" ---------- */
-function StrideTabBar({
+function RunPlanTabBar({
   state,
   descriptors,
   emitter,
@@ -163,7 +155,7 @@ export default function TabsLayout() {
 
   return (
     <Tabs
-      tabBar={(props) => <StrideTabBar {...props} />}
+      tabBar={(props) => <RunPlanTabBar {...props} />}
       screenOptions={{
         headerShown: false,
         sceneStyle: { backgroundColor: colors.bg },
@@ -174,6 +166,10 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="calendar"
         options={{ title: 'Calendar', tabBarAccessibilityLabel: 'Calendar' }}
+      />
+      <Tabs.Screen
+        name="exercises"
+        options={{ title: 'Exercises', tabBarAccessibilityLabel: 'Exercises' }}
       />
       <Tabs.Screen name="progress" options={{ title: 'Stats' }} />
       <Tabs.Screen name="zones" options={{ title: 'Zones' }} />
@@ -210,13 +206,4 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     backgroundColor: colors.accent,
   },
-  calendarDisc: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
-    backgroundColor: colors.accent,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  calendarDiscIdle: { opacity: 0.92 },
 });

@@ -83,6 +83,15 @@ export default function RootLayout() {
                 <Stack.Screen name="(tabs)" />
                 {/* Reached from the avatar on Home, so it is not a tab. */}
                 <Stack.Screen name="profile" options={{ presentation: 'modal' }} />
+                {/* Exercise library routes, pushed over the tabs. */}
+                <Stack.Screen name="exercise/[id]" />
+                <Stack.Screen name="library/browse" />
+                <Stack.Screen name="library/category/[id]" />
+                <Stack.Screen name="library/favorites" />
+                <Stack.Screen name="routines/index" />
+                <Stack.Screen name="routines/[id]" />
+                <Stack.Screen name="routines/[id]/session" />
+                <Stack.Screen name="muscles" />
               </Stack.Protected>
             </Stack>
           </AppProvider>

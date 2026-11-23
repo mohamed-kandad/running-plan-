@@ -5,6 +5,7 @@ import {
     ActivityIndicator,
     Animated,
     Easing,
+    Image,
     Pressable,
     StyleSheet,
     Text,
@@ -23,7 +24,7 @@ import { colors, radius } from '@/theme';
 
 // ---- edit these ----
 const CREATOR = 'M.kandad';
-const APP_NAME = 'RUN';
+const APP_NAME = 'RUN PLAN';
 const BG = '#0E0F0C';
 const PAPER = '#F2EFE4';
 const INK = '#14150F';
@@ -529,9 +530,11 @@ export default function WelcomeScreen() {
 
                     {/* top bar */}
                     <Animated.View style={[styles.topBar, rise(a1, 10)]}>
-                        <View style={styles.logo}>
-                            <Ionicons name="flash" size={16} color={colors.accentInk} />
-                        </View>
+                        <Image
+                            source={require('../../assets/icon.png')}
+                            style={styles.logoMark}
+                            accessibilityIgnoresInvertColors
+                        />
                         <Text style={styles.logoText}>{APP_NAME}</Text>
                         <View style={styles.flex} />
                         <Text style={styles.byLabel}>by </Text>
@@ -999,13 +1002,10 @@ const styles = StyleSheet.create({
 
     /* top bar */
     topBar: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-    logo: {
-        width: 30,
-        height: 30,
-        borderRadius: 10,
-        backgroundColor: colors.accent,
-        alignItems: 'center',
-        justifyContent: 'center',
+    logoMark: {
+        width: 34,
+        height: 34,
+        borderRadius: 9,
     },
     logoText: {
         color: colors.text,

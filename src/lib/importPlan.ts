@@ -154,7 +154,7 @@ function headerKeys(rows: Row[]): Set<string> {
 const hasAny = (keys: Set<string>, aliases: string[]) => aliases.some((key) => keys.has(key));
 
 /**
- * Reads a workbook written by Stride (or by hand in the same shape) and turns it into
+ * Reads a workbook written by Run Plan (or by hand in the same shape) and turns it into
  * plan sessions and logged runs. Unknown columns are ignored and values are coerced
  * generously, so a template edited in Excel, Numbers or Google Sheets still imports.
  */

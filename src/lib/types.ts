@@ -47,6 +47,16 @@ export interface Zone {
   max: number;
 }
 
+/** Where a runner is up to in a routine, kept so they can resume it later. */
+export interface RoutineProgress {
+  /** Ids of the routine steps already ticked off. */
+  completed: string[];
+  /** The step currently on screen. */
+  index: number;
+  startedAt: string;
+  finishedAt?: string;
+}
+
 export interface AppState {
   settings: PlanSettings;
   plan: Workout[];
@@ -56,4 +66,10 @@ export interface AppState {
   restingHr: number;
   /** Device calendar event id per workout id, so exports never duplicate. */
   calendarEventIds: Record<string, string>;
+  /** Exercise library: favourites, recently viewed and routine progress. */
+  exerciseFavorites: string[];
+  exerciseRecent: string[];
+  routineProgress: Record<string, RoutineProgress>;
+  /** Exercise id -> local URI or web data URL of a photo the runner added. */
+  customExerciseImages: Record<string, string>;
 }

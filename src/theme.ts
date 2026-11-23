@@ -1,5 +1,5 @@
 /**
- * Design tokens — Stride.
+ * Design tokens — Run Plan.
  *
  * One neon lime accent on near-black. Lime is reserved for the primary CTA,
  * the single hero metric on a screen, the active tab, progress fills, charts

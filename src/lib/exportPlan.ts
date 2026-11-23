@@ -108,7 +108,7 @@ function downloadInBrowser(bytes: Uint8Array, filename: string) {
 export async function exportPlanToExcel(input: ExportInput): Promise<ExportResult> {
   const XLSX = await import('xlsx');
   const workbook = buildWorkbook(XLSX, input);
-  const filename = `stride-${input.settings.goal.toLowerCase()}-${todayISO()}.xlsx`;
+  const filename = `runplan-${input.settings.goal.toLowerCase()}-${todayISO()}.xlsx`;
 
   if (Platform.OS === 'web') {
     const data = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });

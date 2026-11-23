@@ -1,0 +1,371 @@
+{
+  "goblet-squat": {
+    "dataset": "Goblet Squat",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/goblet-squat-photo-1.jpg",
+      "assets/exercises/strength/goblet-squat-photo-2.jpg"
+    ]
+  },
+  "bodyweight-squat": {
+    "dataset": "Bodyweight Squat",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/bodyweight-squat-photo-1.jpg",
+      "assets/exercises/strength/bodyweight-squat-photo-2.jpg"
+    ]
+  },
+  "bulgarian-split-squat": {
+    "dataset": "Elevated Back Lunge",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/bulgarian-split-squat-photo-1.jpg",
+      "assets/exercises/strength/bulgarian-split-squat-photo-2.jpg"
+    ]
+  },
+  "walking-lunges": {
+    "dataset": "Bodyweight Walking Lunge",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/warmup/walking-lunges-photo-1.jpg",
+      "assets/exercises/warmup/walking-lunges-photo-2.jpg"
+    ]
+  },
+  "forward-lunge": {
+    "dataset": "Dumbbell Lunges",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/forward-lunge-photo-1.jpg",
+      "assets/exercises/strength/forward-lunge-photo-2.jpg"
+    ]
+  },
+  "reverse-lunges": {
+    "dataset": "Dumbbell Rear Lunge",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/warmup/reverse-lunges-photo-1.jpg",
+      "assets/exercises/warmup/reverse-lunges-photo-2.jpg"
+    ]
+  },
+  "dumbbell-rdl": {
+    "dataset": "Romanian Deadlift",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/dumbbell-rdl-photo-1.jpg",
+      "assets/exercises/strength/dumbbell-rdl-photo-2.jpg"
+    ]
+  },
+  "single-leg-rdl": {
+    "dataset": "Kettlebell One-Legged Deadlift",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/foot-ankle/single-leg-rdl-photo-1.jpg",
+      "assets/exercises/foot-ankle/single-leg-rdl-photo-2.jpg"
+    ]
+  },
+  "step-ups": {
+    "dataset": "Step-up with Knee Raise",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/step-ups-photo-1.jpg",
+      "assets/exercises/strength/step-ups-photo-2.jpg"
+    ]
+  },
+  "weighted-step-ups": {
+    "dataset": "Dumbbell Step Ups",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/trail/weighted-step-ups-photo-1.jpg",
+      "assets/exercises/trail/weighted-step-ups-photo-2.jpg"
+    ]
+  },
+  "glute-bridge": {
+    "dataset": "Butt Lift (Bridge)",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/glute-bridge-photo-1.jpg",
+      "assets/exercises/strength/glute-bridge-photo-2.jpg"
+    ]
+  },
+  "single-leg-glute-bridge": {
+    "dataset": "Single Leg Glute Bridge",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/single-leg-glute-bridge-photo-1.jpg",
+      "assets/exercises/strength/single-leg-glute-bridge-photo-2.jpg"
+    ]
+  },
+  "hip-thrust": {
+    "dataset": "Barbell Hip Thrust",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/hip-thrust-photo-1.jpg",
+      "assets/exercises/strength/hip-thrust-photo-2.jpg"
+    ]
+  },
+  "standing-calf-raises": {
+    "dataset": "Standing Calf Raises",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/warmup/standing-calf-raises-photo-1.jpg",
+      "assets/exercises/warmup/standing-calf-raises-photo-2.jpg"
+    ]
+  },
+  "seated-calf-raises": {
+    "dataset": "Barbell Seated Calf Raise",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/strength/seated-calf-raises-photo-1.jpg",
+      "assets/exercises/strength/seated-calf-raises-photo-2.jpg"
+    ]
+  },
+  "plank": {
+    "dataset": "Plank",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/core/plank-photo-1.jpg",
+      "assets/exercises/core/plank-photo-2.jpg"
+    ]
+  },
+  "side-plank": {
+    "dataset": "Side Bridge",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/core/side-plank-photo-1.jpg",
+      "assets/exercises/core/side-plank-photo-2.jpg"
+    ]
+  },
+  "dead-bug": {
+    "dataset": "Dead Bug",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/core/dead-bug-photo-1.jpg",
+      "assets/exercises/core/dead-bug-photo-2.jpg"
+    ]
+  },
+  "reverse-crunch": {
+    "dataset": "Reverse Crunch",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/core/reverse-crunch-photo-1.jpg",
+      "assets/exercises/core/reverse-crunch-photo-2.jpg"
+    ]
+  },
+  "mountain-climbers": {
+    "dataset": "Mountain Climbers",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/core/mountain-climbers-photo-1.jpg",
+      "assets/exercises/core/mountain-climbers-photo-2.jpg"
+    ]
+  },
+  "pallof-press": {
+    "dataset": "Pallof Press",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/core/pallof-press-photo-1.jpg",
+      "assets/exercises/core/pallof-press-photo-2.jpg"
+    ]
+  },
+  "russian-twists": {
+    "dataset": "Russian Twist",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/core/russian-twists-photo-1.jpg",
+      "assets/exercises/core/russian-twists-photo-2.jpg"
+    ]
+  },
+  "superman-hold": {
+    "dataset": "Superman",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/core/superman-hold-photo-1.jpg",
+      "assets/exercises/core/superman-hold-photo-2.jpg"
+    ]
+  },
+  "side-lying-leg-raises": {
+    "dataset": "Side Leg Raises",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/glutes-hips/side-lying-leg-raises-photo-1.jpg",
+      "assets/exercises/glutes-hips/side-lying-leg-raises-photo-2.jpg"
+    ]
+  },
+  "monster-walks": {
+    "dataset": "Monster Walk",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/glutes-hips/monster-walks-photo-1.jpg",
+      "assets/exercises/glutes-hips/monster-walks-photo-2.jpg"
+    ]
+  },
+  "standing-hip-extensions": {
+    "dataset": "Hip Extension with Bands",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/glutes-hips/standing-hip-extensions-photo-1.jpg",
+      "assets/exercises/glutes-hips/standing-hip-extensions-photo-2.jpg"
+    ]
+  },
+  "farmers-carry": {
+    "dataset": "Farmer's Walk",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/trail/farmers-carry-photo-1.jpg",
+      "assets/exercises/trail/farmers-carry-photo-2.jpg"
+    ]
+  },
+  "standing-calf-stretch": {
+    "dataset": "Calf Stretch Hands Against Wall",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/cooldown/standing-calf-stretch-photo-1.jpg",
+      "assets/exercises/cooldown/standing-calf-stretch-photo-2.jpg"
+    ]
+  },
+  "hamstring-stretch": {
+    "dataset": "Hamstring Stretch",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/cooldown/hamstring-stretch-photo-1.jpg",
+      "assets/exercises/cooldown/hamstring-stretch-photo-2.jpg"
+    ]
+  },
+  "hip-flexor-stretch": {
+    "dataset": "Kneeling Hip Flexor",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/cooldown/hip-flexor-stretch-photo-1.jpg",
+      "assets/exercises/cooldown/hip-flexor-stretch-photo-2.jpg"
+    ]
+  },
+  "standing-quad-stretch": {
+    "dataset": "Standing Elevated Quad Stretch",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/cooldown/standing-quad-stretch-photo-1.jpg",
+      "assets/exercises/cooldown/standing-quad-stretch-photo-2.jpg"
+    ]
+  },
+  "childs-pose": {
+    "dataset": "Child's Pose",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/cooldown/childs-pose-photo-1.jpg",
+      "assets/exercises/cooldown/childs-pose-photo-2.jpg"
+    ]
+  },
+  "adductor-stretch": {
+    "dataset": "Adductor",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/cooldown/adductor-stretch-photo-1.jpg",
+      "assets/exercises/cooldown/adductor-stretch-photo-2.jpg"
+    ]
+  },
+  "worlds-greatest-stretch": {
+    "dataset": "World's Greatest Stretch",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/warmup/worlds-greatest-stretch-photo-1.jpg",
+      "assets/exercises/warmup/worlds-greatest-stretch-photo-2.jpg"
+    ]
+  },
+  "arm-circles": {
+    "dataset": "Arm Circles",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/warmup/arm-circles-photo-1.jpg",
+      "assets/exercises/warmup/arm-circles-photo-2.jpg"
+    ]
+  },
+  "ankle-circles": {
+    "dataset": "Ankle Circles",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/warmup/ankle-circles-photo-1.jpg",
+      "assets/exercises/warmup/ankle-circles-photo-2.jpg"
+    ]
+  },
+  "carioca": {
+    "dataset": "Carioca Quick Step",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/warmup/carioca-photo-1.jpg",
+      "assets/exercises/warmup/carioca-photo-2.jpg"
+    ]
+  },
+  "wall-running-drill": {
+    "dataset": "Linear Acceleration Wall Drill",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/drills/wall-running-drill-photo-1.jpg",
+      "assets/exercises/drills/wall-running-drill-photo-2.jpg"
+    ]
+  },
+  "foam-roll-calves": {
+    "dataset": "Calves-SMR",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/recovery/foam-roll-calves-photo-1.jpg",
+      "assets/exercises/recovery/foam-roll-calves-photo-2.jpg"
+    ]
+  },
+  "foam-roll-hamstrings": {
+    "dataset": "Hamstring-SMR",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/recovery/foam-roll-hamstrings-photo-1.jpg",
+      "assets/exercises/recovery/foam-roll-hamstrings-photo-2.jpg"
+    ]
+  },
+  "foam-roll-quads": {
+    "dataset": "Quadriceps-SMR",
+    "license": "Unlicense (public domain)",
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "files": [
+      "assets/exercises/recovery/foam-roll-quads-photo-1.jpg",
+      "assets/exercises/recovery/foam-roll-quads-photo-2.jpg"
+    ]
+  }
+}

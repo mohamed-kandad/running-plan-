@@ -11,7 +11,7 @@ const MAX_BOARD = 520;
 const BOARD_PAD = 12;
 
 /**
- * Stride's own keypad for the race bib. The welcome screen never opens the phone
+ * Run Plan's own keypad for the race bib. The welcome screen never opens the phone
  * keyboard, so the name is typed on a flat, race-timing style board that matches
  * the rest of the app: dark keycaps, one lime action key.
  */
@@ -69,7 +69,7 @@ export function NameKeyboard({
           accessibilityLabel="Close keyboard">
           <Ionicons name="chevron-down" size={17} color={colors.muted} />
         </Pressable>
-        <Text style={styles.headLabel}>STRIDE KEYPAD</Text>
+        <Text style={styles.headLabel}>RUN PLAN KEYPAD</Text>
         <View style={styles.headRule} />
         <Text style={styles.headCount}>
           {value.length}/{maxLength}

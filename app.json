@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Stride",
+    "name": "Run Plan",
     "slug": "stride",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,7 +15,7 @@
     "android": {
       "package": "com.stride.runplan",
       "adaptiveIcon": {
-        "backgroundColor": "#0A0C0E",
+        "backgroundColor": "#0A0A0C",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
@@ -34,7 +34,7 @@
       [
         "expo-calendar",
         {
-          "calendarPermission": "Stride adds your running plan to your calendar and reads your runs back."
+          "calendarPermission": "Run Plan adds your running plan to your calendar and reads your runs back."
         }
       ],
       [
@@ -46,13 +46,13 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#0D0F12",
+          "backgroundColor": "#0A0B0E",
           "image": "./assets/splash-icon.png",
-          "imageWidth": 132,
+          "imageWidth": 160,
           "resizeMode": "contain",
           "dark": {
             "image": "./assets/splash-icon.png",
-            "backgroundColor": "#0D0F12"
+            "backgroundColor": "#0A0B0E"
           }
         }
       ]

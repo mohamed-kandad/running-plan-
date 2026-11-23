@@ -1,4 +1,4 @@
-# Stride — running plan
+# Run Plan — running plan
 
 A local-first Expo (React Native) app that turns a race goal into a week-by-week running plan and
 tracks what you actually ran. No backend, no account: everything lives in AsyncStorage on the device.
@@ -47,7 +47,7 @@ week, session, type, km, zone, target pace, status, notes), **Runs** (logged dis
 pace, avg HR, effort, notes) and **Settings** (goal, level, runs/week, plan start, race date,
 export date). The workbook is written to a `Uint8Array`; on device it lands in the cache directory
 through the `expo-file-system` `File` API and opens in the system share sheet via `expo-sharing`
-(AirDrop, Mail, Files), on web it becomes a Blob download named `stride-<goal>-<date>.xlsx`.
+(AirDrop, Mail, Files), on web it becomes a Blob download named `runplan-<goal>-<date>.xlsx`.
 
 ## Excel import
 
@@ -83,6 +83,32 @@ planned session is logged as an **extra run** (distance estimated at 6:00 /km fr
 Web has no calendar API, so both calendar actions report that they need the iOS/Android app.
 `expo-calendar` and `expo-document-picker` ship in Expo Go for SDK 58; a development build is only
 needed if you strip them out of the client.
+
+
+## Exercise library
+
+The **Exercises** tab is a fully offline library: 115 exercises across 10 categories, 13 muscle-group
+references and 8 ready-made routines, with favourites, recently viewed history and routine progress
+persisted in the same AsyncStorage state as the plan.
+
+- Content lives in `src/lib/exercises/` — one file per primary category (`warmup.ts`, `strength.ts`, …),
+  plus `categories.ts`, `routines.ts`, `muscles.ts` and the generated image manifests. Every exercise
+  has a stable `id`, difficulty, primary/secondary muscles, equipment, when to use it, instructions,
+  breathing, prescription, common mistakes, safety notes and a "why runners need it" line.
+- Real photos are bundled for the exercises where an accurate public-domain demonstration exists,
+  downloaded from [free-exercise-db](https://github.com/yuhonas/free-exercise-db) (The Unlicense) by
+  `tools/photos.py`, then centre-cropped to 640×640. The source URL, dataset name and licence for each
+  photo are recorded in `tools/photo-sources.json`. No image is fetched at runtime.
+- Where no accurate licensed photo exists (running drills, most mobility and recovery work), the app
+  ships a custom-generated, schematic movement guide drawn by `tools/illustrate.py` from the pose
+  families in `tools/art.py`. `tools/muscles.py` draws the muscle reference maps.
+- `tools/coverage.py` verifies that every exercise record has at least one bundled frame and that every
+  manifest path resolves; it prints the coverage report used when reviewing a build.
+- Workout notes are matched against the library by name (longest match wins, aliases included), so
+  `Goblet squat 3 × 10` inside a plan opens the exercise page, with the workout's own sets and reps
+  shown separately from the general recommendation.
+- Routines can be started from the library; the execution screen tracks each step, shows the next
+  exercise, supports pause/exit and ends with a completion summary. Progress survives a restart.
 
 ## Commands
 

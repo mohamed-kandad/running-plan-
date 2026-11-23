@@ -34,6 +34,10 @@ export function createInitialState(): AppState {
     restingHr: DEFAULT_RESTING_HR,
     zones: zonesFromMaxHr(DEFAULT_MAX_HR),
     calendarEventIds: {},
+    exerciseFavorites: [],
+    exerciseRecent: [],
+    routineProgress: {},
+    customExerciseImages: {},
   };
 }
 
@@ -76,6 +80,17 @@ interface AppContextValue extends AppState {
   resetZones: () => void;
   /** Wipes every stored thing: plan, workouts, runs, zones and settings. */
   clearAllData: () => void;
+  /* Exercise library */
+  toggleExerciseFavorite: (id: string) => void;
+  markExerciseViewed: (id: string) => void;
+  clearExerciseHistory: () => void;
+  startRoutine: (id: string) => void;
+  setRoutineIndex: (id: string, index: number) => void;
+  toggleRoutineStep: (id: string, stepKey: string) => void;
+  finishRoutine: (id: string) => void;
+  resetRoutine: (id: string) => void;
+  setCustomExerciseImage: (id: string, uri: string) => void;
+  removeCustomExerciseImage: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -105,6 +120,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
               runs: parsed.runs ?? [],
               zones: parsed.zones ?? prev.zones,
               calendarEventIds: parsed.calendarEventIds ?? {},
+              exerciseFavorites: parsed.exerciseFavorites ?? [],
+              exerciseRecent: parsed.exerciseRecent ?? [],
+              routineProgress: parsed.routineProgress ?? {},
+              customExerciseImages: parsed.customExerciseImages ?? {},
             }));
           }
         }
@@ -316,6 +335,101 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     );
   }, []);
 
+  /* ---------- Exercise library ---------- */
+
+  const toggleExerciseFavorite = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      exerciseFavorites: prev.exerciseFavorites.includes(id)
+        ? prev.exerciseFavorites.filter((item) => item !== id)
+        : [id, ...prev.exerciseFavorites],
+    }));
+  }, []);
+
+  /** Recently viewed, most recent first, capped so the home screen stays light. */
+  const markExerciseViewed = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      exerciseRecent: [id, ...prev.exerciseRecent.filter((item) => item !== id)].slice(0, 12),
+    }));
+  }, []);
+
+  const clearExerciseHistory = useCallback(() => {
+    setState((prev) => ({ ...prev, exerciseRecent: [] }));
+  }, []);
+
+  const startRoutine = useCallback((id: string) => {
+    setState((prev) => ({
+      ...prev,
+      routineProgress: {
+        ...prev.routineProgress,
+        [id]: { completed: [], index: 0, startedAt: new Date().toISOString() },
+      },
+    }));
+  }, []);
+
+  const setRoutineIndex = useCallback((id: string, index: number) => {
+    setState((prev) => {
+      const current = prev.routineProgress[id];
+      if (!current) return prev;
+      return {
+        ...prev,
+        routineProgress: { ...prev.routineProgress, [id]: { ...current, index } },
+      };
+    });
+  }, []);
+
+  const toggleRoutineStep = useCallback((id: string, stepKey: string) => {
+    setState((prev) => {
+      const current = prev.routineProgress[id];
+      if (!current) return prev;
+      const completed = current.completed.includes(stepKey)
+        ? current.completed.filter((key) => key !== stepKey)
+        : [...current.completed, stepKey];
+      return {
+        ...prev,
+        routineProgress: { ...prev.routineProgress, [id]: { ...current, completed } },
+      };
+    });
+  }, []);
+
+  const finishRoutine = useCallback((id: string) => {
+    setState((prev) => {
+      const current = prev.routineProgress[id];
+      if (!current) return prev;
+      return {
+        ...prev,
+        routineProgress: {
+          ...prev.routineProgress,
+          [id]: { ...current, finishedAt: new Date().toISOString() },
+        },
+      };
+    });
+  }, []);
+
+  const resetRoutine = useCallback((id: string) => {
+    setState((prev) => {
+      const next = { ...prev.routineProgress };
+      delete next[id];
+      return { ...prev, routineProgress: next };
+    });
+  }, []);
+
+  const setCustomExerciseImage = useCallback((id: string, uri: string) => {
+    setState((prev) => ({
+      ...prev,
+      customExerciseImages: { ...prev.customExerciseImages, [id]: uri },
+    }));
+  }, []);
+
+  const removeCustomExerciseImage = useCallback((id: string) => {
+    setState((prev) => {
+      const next = { ...prev.customExerciseImages };
+      delete next[id];
+      return { ...prev, customExerciseImages: next };
+    });
+  }, []);
+
   const completedIds = useMemo(
     () => new Set(state.runs.map((r) => r.workoutId).filter((id): id is string => !!id)),
     [state.runs]
@@ -343,6 +457,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setRestingHr,
       resetZones,
       clearAllData,
+      toggleExerciseFavorite,
+      markExerciseViewed,
+      clearExerciseHistory,
+      startRoutine,
+      setRoutineIndex,
+      toggleRoutineStep,
+      finishRoutine,
+      resetRoutine,
+      setCustomExerciseImage,
+      removeCustomExerciseImage,
     }),
     [
       state,
@@ -365,6 +489,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setRestingHr,
       resetZones,
       clearAllData,
+      toggleExerciseFavorite,
+      markExerciseViewed,
+      clearExerciseHistory,
+      startRoutine,
+      setRoutineIndex,
+      toggleRoutineStep,
+      finishRoutine,
+      resetRoutine,
+      setCustomExerciseImage,
+      removeCustomExerciseImage,
     ]
   );
 

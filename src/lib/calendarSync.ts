@@ -67,10 +67,10 @@ export function exportPlanToIcs(plan: Workout[], settings: PlanSettings): string
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Stride//Running Plan//EN',
+    'PRODID:-//Run Plan//Running Plan//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
-    'X-WR-CALNAME:Stride Running Plan',
+    'X-WR-CALNAME:Run Plan',
   ];
 
   for (const workout of upcoming) {
@@ -79,11 +79,11 @@ export function exportPlanToIcs(plan: Workout[], settings: PlanSettings): string
     const dtEnd = `${dateStr}T080000`;
     const title = `${workout.title} · ${workout.distanceKm} km`;
     const targetPace = paceTarget(workout.type, settings.level);
-    const description = `${workout.detail}\n\nTarget pace ${targetPace} /km · Zone ${workout.zone}\nImported from Stride`;
+    const description = `${workout.detail}\n\nTarget pace ${targetPace} /km · Zone ${workout.zone}\nImported from Run Plan`;
 
     lines.push(
       'BEGIN:VEVENT',
-      `UID:stride-${workout.id}-${dateStr}@stride.app`,
+      `UID:runplan-${workout.id}-${dateStr}@runplan.app`,
       `DTSTAMP:${nowStamp}`,
       `DTSTART:${dtStart}`,
       `DTEND:${dtEnd}`,
@@ -136,7 +136,7 @@ export async function addPlanToCalendar(
       return { created: 0, updated: 0, eventIds: {} };
     }
     const icsData = exportPlanToIcs(plan, settings);
-    downloadWebIcs(icsData, `stride-${settings.goal.toLowerCase()}-plan.ics`);
+    downloadWebIcs(icsData, `runplan-${settings.goal.toLowerCase()}-plan.ics`);
     return { created: upcoming.length, updated: 0, eventIds: {} };
   }
 
@@ -159,7 +159,7 @@ export async function addPlanToCalendar(
       startDate,
       endDate,
       allDay: false,
-      notes: `${workout.detail}\n\nTarget pace ${paceTarget(workout.type, settings.level)} /km · Zone ${workout.zone}\nImported from Stride`,
+      notes: `${workout.detail}\n\nTarget pace ${paceTarget(workout.type, settings.level)} /km · Zone ${workout.zone}\nImported from Run Plan`,
       alarms: [{ relativeOffset: -30 }],
       timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
     };
